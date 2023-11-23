@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
+    [Header("Cannon Components")]
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform cannonBodyTransform;
     [SerializeField] private bool isYInversed;

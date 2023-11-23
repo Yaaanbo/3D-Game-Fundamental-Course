@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CannonShooter : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private CannonAmmo cannonAmmo;
+
+    [Header("Shooter components")]
     [SerializeField] private GameObject cannonBallPrefab;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private float shootForce;
@@ -17,6 +21,8 @@ public class CannonShooter : MonoBehaviour
 
     private void ShootingHandler()
     {
+        if (cannonAmmo.CurrentAmmo <= 0) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             GameObject cannonBall = Instantiate(cannonBallPrefab, shootPoint.position, shootPoint.rotation);
@@ -25,6 +31,8 @@ public class CannonShooter : MonoBehaviour
 
             float selfDestroyDuration = 5f;
             Destroy(cannonBall, selfDestroyDuration);
+
+            cannonAmmo.CurrentAmmo--;
         }
     }
 }
