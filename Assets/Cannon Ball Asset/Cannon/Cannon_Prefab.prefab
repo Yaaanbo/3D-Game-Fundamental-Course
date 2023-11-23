@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannonBallPrefab: {fileID: 7020951524121904755, guid: 5488d55b4b2d1954aa031134e86d63d8, type: 3}
   shootPoint: {fileID: 774796070924302588}
-  shootForce: 30
+  shootForce: 300
 --- !u!1 &6145522441115808965
 GameObject:
   m_ObjectHideFlags: 0
