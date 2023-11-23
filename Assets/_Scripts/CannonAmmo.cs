@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CannonAmmo : MonoBehaviour
 {
+    //Event Action
     public Action<int, int> onAmmoUpdated;
 
     [Header("Ammo Component")]
@@ -21,6 +22,10 @@ public class CannonAmmo : MonoBehaviour
         {
             currentAmo = value;
             onAmmoUpdated?.Invoke(currentAmo, maxAmo);
+            if(currentAmo <= 0 && CannonGameManager.instance.brickFallen < CannonGameManager.instance.brickNeeded)
+            {
+                Debug.Log("You Lose");
+            }
         }
     }
 
