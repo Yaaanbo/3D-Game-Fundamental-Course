@@ -6,11 +6,18 @@ public class CannonController : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform cannonBodyTransform;
+    [SerializeField] private bool isYInversed;
 
     private float yDegrees, zDegrees;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+            isYInversed = !isYInversed;
+    }
+
+    void FixedUpdate()
     {
         CannonMovementHandler();
     }
@@ -20,8 +27,14 @@ public class CannonController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        yDegrees += vertical * rotationSpeed * Time.deltaTime;
+        if (isYInversed)
+            yDegrees += vertical * -rotationSpeed * Time.deltaTime;
+        else
+            yDegrees += vertical * rotationSpeed * Time.deltaTime;
+
+
         zDegrees += horizontal * rotationSpeed * Time.deltaTime;
+
 
         float minimumYAngle = -10f, maximumYAngle = 45f;
         float minimumZAngle = -35f, maximumZAngle = 35f;
