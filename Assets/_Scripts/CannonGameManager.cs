@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CannonGameManager : MonoBehaviour
 {
@@ -26,12 +27,25 @@ public class CannonGameManager : MonoBehaviour
         brickNeeded = brickParent.childCount;
     }
 
+    private void Update()
+    {
+        RestartGame();
+    }
+
     public void OnBrickFall()
     {
         brickFallen++;
         if(brickFallen >= brickNeeded)
         {
             Debug.Log("You Won!");
+        }
+    }
+
+    private void RestartGame()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
