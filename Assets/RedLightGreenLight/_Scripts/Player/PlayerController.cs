@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Reference")]
     [SerializeField] private DollBehaviour doll;
+    [SerializeField] private CameraFollow camFoll;
 
     [Header("Movement")]
     [SerializeField] private CharacterController controller;
@@ -15,6 +16,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Anim threshold")]
     [HideInInspector] public float animThreshold;
+
+    [Header("Player Body")]
+    [SerializeField] private GameObject playerBody;
+    [SerializeField] private GameObject ragdollBody;
+    [SerializeField] private Transform ragdollHips;
 
     private bool isDead = false;
     // Update is called once per frame
@@ -43,14 +49,15 @@ public class PlayerController : MonoBehaviour
             animThreshold = new Vector2(horizontal, vertical).magnitude;
 
             if (!doll.isGreenLight)
-            {
                 doll.ShootPlayer(this.transform);
-            }
         }
     }
 
     public void OnPlayerDead()
     {
+        camFoll.playerTarget = ragdollHips;
+        playerBody.SetActive(false);
+        ragdollBody.SetActive(true);
         isDead = true;
     }
 }
