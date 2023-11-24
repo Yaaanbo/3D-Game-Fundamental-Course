@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class DollBehaviour : MonoBehaviour
 {
+    [Header("Red Light Green Light")]
     [SerializeField] private float minTimer, maxTimer;
     [HideInInspector] public bool isGreenLight = true;
+
+    [Header("Shooting")]
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform shootPoint;
+    private bool isShooting = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +27,14 @@ public class DollBehaviour : MonoBehaviour
         Debug.Log("Is Green Light : " + isGreenLight);
 
         StartCoroutine(ChangeLight());
+    }
+
+    public void ShootPlayer(Transform _target)
+    {
+        if (isShooting) return;
+
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+        bullet.GetComponent<BulletBehaviour>().targetPlayer = _target;
+        isShooting = true;
     }
 }

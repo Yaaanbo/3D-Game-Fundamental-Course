@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Reference")]
+    [SerializeField] private DollBehaviour doll;
+
+    [Header("Movement")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSmoothTime = .125f;
     private float turnSmoothVelocity;
 
+    [Header("Anim threshold")]
     [HideInInspector] public float animThreshold;
+
+    private bool isDead = false;
     // Update is called once per frame
     void Update()
     {
@@ -18,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private void MovementHandler()
     {
+        if (isDead) return;
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -32,6 +41,16 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDir * movementSpeed * Time.deltaTime);
 
             animThreshold = new Vector2(horizontal, vertical).magnitude;
+
+            if (!doll.isGreenLight)
+            {
+                doll.ShootPlayer(this.transform);
+            }
         }
+    }
+
+    public void OnPlayerDead()
+    {
+        isDead = true;
     }
 }
