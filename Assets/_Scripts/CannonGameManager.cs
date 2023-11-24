@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,15 @@ public class CannonGameManager : MonoBehaviour
 {
     public static CannonGameManager instance;
 
+    public Action<int> onLevelUIChanged;
     public int brickFallen { get; private set; }
     public int brickNeeded { get; set; }
 
     [Header("Components")]
     [SerializeField] private GameObject[] wallPrefabs;
     [SerializeField] private Transform wallSpawnPos;
+
+    public static int level = 1;
 
     private void Awake()
     {
@@ -26,11 +30,7 @@ public class CannonGameManager : MonoBehaviour
     void Start()
     {
         SpawnWall();
-    }
-
-    private void Update()
-    {
-        RestartGame();
+        onLevelUIChanged?.Invoke(level);
     }
 
     public void OnBrickFall()
@@ -38,21 +38,20 @@ public class CannonGameManager : MonoBehaviour
         brickFallen++;
         if(brickFallen >= brickNeeded)
         {
-            Debug.Log("You Won!");
+            level++;
+            onLevelUIChanged?.Invoke(level);
+            RestartGame();
         }
     }
 
-    private void RestartGame()
+    public void RestartGame()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void SpawnWall()
     {
-        int randomWall = Random.Range(0, wallPrefabs.Length);
+        int randomWall = UnityEngine.Random.Range(0, wallPrefabs.Length);
         Instantiate(wallPrefabs[randomWall], wallSpawnPos.position, Quaternion.identity);
     }
 }

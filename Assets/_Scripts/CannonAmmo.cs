@@ -7,6 +7,7 @@ public class CannonAmmo : MonoBehaviour
 {
     //Event Action
     public Action<int, int> onAmmoUpdated;
+    public Action<int> onLevelUIChanged;
 
     [Header("Ammo Component")]
     [SerializeField] private int maxAmo;
@@ -24,6 +25,9 @@ public class CannonAmmo : MonoBehaviour
             onAmmoUpdated?.Invoke(currentAmo, maxAmo);
             if(currentAmo <= 0 && CannonGameManager.instance.brickFallen < CannonGameManager.instance.brickNeeded)
             {
+                CannonGameManager.level = 1;
+                onLevelUIChanged?.Invoke(CannonGameManager.level);
+                CannonGameManager.instance.RestartGame();
                 Debug.Log("You Lose");
             }
         }
