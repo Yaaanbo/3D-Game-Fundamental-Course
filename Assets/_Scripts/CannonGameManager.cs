@@ -8,10 +8,11 @@ public class CannonGameManager : MonoBehaviour
     public static CannonGameManager instance;
 
     public int brickFallen { get; private set; }
-    public int brickNeeded { get; private set; }
+    public int brickNeeded { get; set; }
 
     [Header("Components")]
-    [SerializeField] private Transform brickParent;
+    [SerializeField] private GameObject[] wallPrefabs;
+    [SerializeField] private Transform wallSpawnPos;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class CannonGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        brickNeeded = brickParent.childCount;
+        SpawnWall();
     }
 
     private void Update()
@@ -47,5 +48,11 @@ public class CannonGameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    private void SpawnWall()
+    {
+        int randomWall = Random.Range(0, wallPrefabs.Length);
+        Instantiate(wallPrefabs[randomWall], wallSpawnPos.position, Quaternion.identity);
     }
 }
