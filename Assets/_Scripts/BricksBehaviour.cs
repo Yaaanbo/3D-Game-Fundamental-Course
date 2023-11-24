@@ -7,6 +7,15 @@ public class BricksBehaviour : MonoBehaviour
     private const string FALLEN_WALL_DETECTOR_TAG = "FallenWallDetector";
     private bool isFallen;
 
+    private void Update()
+    {
+        if (isFallen)
+        {
+            float selfDestroyTime = 5f;
+            Destroy(this.gameObject, selfDestroyTime);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (isFallen) return;

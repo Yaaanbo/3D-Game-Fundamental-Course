@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonAmmo: {fileID: 1796783005}
+  cannonManager: {fileID: 204272767}
   ammoText: {fileID: 988767437}
   levelText: {fileID: 646862024}
 --- !u!4 &204272766

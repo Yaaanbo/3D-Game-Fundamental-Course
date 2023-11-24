@@ -23,12 +23,9 @@ public class CannonAmmo : MonoBehaviour
         {
             currentAmo = value;
             onAmmoUpdated?.Invoke(currentAmo, maxAmo);
-            if(currentAmo <= 0 && CannonGameManager.instance.brickFallen < CannonGameManager.instance.brickNeeded)
+            if(currentAmo <= 0)
             {
-                CannonGameManager.level = 1;
-                onLevelUIChanged?.Invoke(CannonGameManager.level);
-                CannonGameManager.instance.RestartGame();
-                Debug.Log("You Lose");
+                StartCoroutine(OnOutOfAmmo());
             }
         }
     }
@@ -37,5 +34,18 @@ public class CannonAmmo : MonoBehaviour
     {
         currentAmo = maxAmo;
         onAmmoUpdated?.Invoke(currentAmo, maxAmo);
+    }
+
+    private IEnumerator OnOutOfAmmo()
+    {
+        float waitTime = 5f;
+        yield return new WaitForSeconds(waitTime);
+        if(CannonGameManager.instance.brickFallen < CannonGameManager.instance.brickNeeded)
+        {
+            CannonGameManager.level = 1;
+            onLevelUIChanged?.Invoke(CannonGameManager.level);
+            CannonGameManager.instance.RestartGame();
+            Debug.Log("You Lose");
+        }
     }
 }
