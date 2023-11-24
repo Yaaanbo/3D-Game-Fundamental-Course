@@ -8,5 +8,6 @@ public class BricksWallBehaviour : MonoBehaviour
     void Start()
     {
         CannonGameManager.instance.brickNeeded += this.transform.childCount;
+        CannonGameManager.instance.onSetAmmo?.Invoke();
     }
 }

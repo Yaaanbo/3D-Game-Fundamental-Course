@@ -30,8 +30,24 @@ public class CannonAmmo : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        CannonGameManager.instance.onSetAmmo += SetAmmo;
+    }
+
+    private void OnDisable()
+    {
+        CannonGameManager.instance.onSetAmmo -= SetAmmo;
+    }
+
     private void Start()
     {
+        SetAmmo();
+    }
+
+    private void SetAmmo()
+    {
+        maxAmo = CannonGameManager.instance.brickNeeded / 3;
         currentAmo = maxAmo;
         onAmmoUpdated?.Invoke(currentAmo, maxAmo);
     }

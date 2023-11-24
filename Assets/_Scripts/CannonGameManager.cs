@@ -9,6 +9,7 @@ public class CannonGameManager : MonoBehaviour
     public static CannonGameManager instance;
 
     public Action<int> onLevelUIChanged;
+    public Action onSetAmmo;
     public int brickFallen { get; private set; }
     public int brickNeeded { get; set; }
 
