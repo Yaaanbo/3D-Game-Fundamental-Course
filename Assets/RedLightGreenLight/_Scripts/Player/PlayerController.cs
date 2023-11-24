@@ -49,7 +49,10 @@ public class PlayerController : MonoBehaviour
             animThreshold = new Vector2(horizontal, vertical).magnitude;
 
             if (!doll.isGreenLight)
-                doll.ShootPlayer(this.transform);
+            {
+                StartCoroutine(DollShoot());
+            }
+                
         }
     }
 
@@ -59,5 +62,12 @@ public class PlayerController : MonoBehaviour
         playerBody.SetActive(false);
         ragdollBody.SetActive(true);
         isDead = true;
+    }
+
+    private IEnumerator DollShoot()
+    {
+        float waitTime = .7f;
+        yield return new WaitForSeconds(waitTime);
+        doll.ShootPlayer(this.transform);
     }
 }
