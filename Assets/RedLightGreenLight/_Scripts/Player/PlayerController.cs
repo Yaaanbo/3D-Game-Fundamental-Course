@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject ragdollBody;
     [SerializeField] private Transform ragdollHips;
 
+    [Header("Dead Particle")]
+    [SerializeField] private ParticleSystem bloodPartcile;
+
     private bool isDead = false;
     // Update is called once per frame
     void Update()
@@ -52,12 +55,12 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(DollShoot());
             }
-                
         }
     }
 
     public void OnPlayerDead()
     {
+        bloodPartcile.Play();
         camFoll.playerTarget = ragdollHips;
         playerBody.SetActive(false);
         ragdollBody.SetActive(true);
