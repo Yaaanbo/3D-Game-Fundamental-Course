@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private const string FINISH_LINE_TAG = "FinishLine";
+
     [Header("Reference")]
     [SerializeField] private DollBehaviour doll;
     [SerializeField] private CameraFollow camFoll;
+    [SerializeField] private PlayerAudio playerAudio;
 
     [Header("Movement")]
     [SerializeField] private CharacterController controller;
@@ -26,6 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem bloodPartcile;
 
     private bool isDead = false;
+    private bool hasWon = false;
+
+    public Action OnPlayerWon;
     // Update is called once per frame
     void Update()
     {
@@ -51,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
             animThreshold = new Vector2(horizontal, vertical).magnitude;
 
-            if (!doll.isGreenLight)
+            if (!doll.isGreenLight && !hasWon)
             {
                 StartCoroutine(DollShoot());
             }
@@ -61,10 +69,17 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerDead()
     {
         bloodPartcile.Play();
+
+        playerAudio.PlayDeadAudio();
+        
         camFoll.playerTarget = ragdollHips;
+        
         playerBody.SetActive(false);
         ragdollBody.SetActive(true);
+        
         isDead = true;
+
+        StartCoroutine(RestartGame());
     }
 
     private IEnumerator DollShoot()
@@ -72,5 +87,22 @@ public class PlayerController : MonoBehaviour
         float waitTime = .7f;
         yield return new WaitForSeconds(waitTime);
         doll.ShootPlayer(this.transform);
+    }
+
+    private IEnumerator RestartGame()
+    {
+        float waitTime = 3f;
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(FINISH_LINE_TAG))
+        {
+            hasWon = true;
+            OnPlayerWon?.Invoke();
+            StartCoroutine(RestartGame());
+        }
     }
 }

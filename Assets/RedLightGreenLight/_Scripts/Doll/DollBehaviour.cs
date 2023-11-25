@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DollBehaviour : MonoBehaviour
 {
+    [Header("Reference")]
+    [SerializeField] private DollAudio dollAudio;
+
     [Header("Red Light Green Light")]
     [SerializeField] private float minTimer, maxTimer;
     [HideInInspector] public bool isGreenLight = true;
@@ -24,7 +27,11 @@ public class DollBehaviour : MonoBehaviour
         yield return new WaitForSeconds(randomTimer);
 
         isGreenLight = !isGreenLight;
-        Debug.Log("Is Green Light : " + isGreenLight);
+
+        if (isGreenLight)
+            dollAudio.PlayGreenLightSFX();
+        else
+            dollAudio.PlayRedLightSFX();
 
         StartCoroutine(ChangeLight());
     }
@@ -32,6 +39,8 @@ public class DollBehaviour : MonoBehaviour
     public void ShootPlayer(Transform _target)
     {
         if (isShooting) return;
+
+        dollAudio.PlayShootingSFX();
 
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
         bullet.GetComponent<BulletBehaviour>().targetPlayer = _target;
