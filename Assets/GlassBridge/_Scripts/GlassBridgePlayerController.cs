@@ -130,7 +130,7 @@ public class GlassBridgePlayerController : MonoBehaviour
                 isFalling = true;
 
                 Debug.Log("Glass is breakable");
-                Destroy(glass.gameObject);
+                glass.BreakGlass();
             }
         }
     }
