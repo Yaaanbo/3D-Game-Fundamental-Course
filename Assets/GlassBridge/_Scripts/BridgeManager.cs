@@ -7,7 +7,6 @@ public class BridgeManager : MonoBehaviour
     [SerializeField] private Transform leftGlassParent, rightGlassParent;
     [SerializeField] private Transform leftBridgeRailing, rightBridgeRailing;
     [SerializeField] private Transform finishGround;
-    [SerializeField] private Transform roomObj;
     [SerializeField] private GameObject glassPrefab;
     [SerializeField] private float bridgeOffset;
     [SerializeField] private float totalRow;
@@ -24,9 +23,6 @@ public class BridgeManager : MonoBehaviour
 
         leftBridgeRailing.localScale = new Vector3(leftBridgeRailing.localScale.x, leftBridgeRailing.localScale.y, finishGround.transform.position.z);
         rightBridgeRailing.localScale = leftBridgeRailing.localScale;
-
-        float roomLengthAddition = 10f;
-        roomObj.localScale = new Vector3(roomObj.localScale.x, roomObj.localScale.y, finishGround.transform.position.z + roomLengthAddition);
 
         for (int i = 0; i < totalRow; i++)
         {

@@ -6,11 +6,14 @@ TagManager:
   tags:
   - FallenWallDetector
   - FinishLine
+  - FallDetector
+  - RoomGround
+  - FinishColl
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Ground
