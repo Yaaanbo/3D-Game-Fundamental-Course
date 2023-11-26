@@ -2306,7 +2306,7 @@ GameObject:
   - component: {fileID: 1242206649}
   - component: {fileID: 1242206648}
   - component: {fileID: 1242206647}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FinishGroundCollider
   m_TagString: FinishColl
   m_Icon: {fileID: 0}

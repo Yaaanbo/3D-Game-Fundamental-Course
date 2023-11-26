@@ -41,6 +41,8 @@ public class GlassBridgePlayerController : MonoBehaviour
     public bool isGrounded { get; private set; }
     public bool isRunning { get; private set; }
 
+    private bool isDead = false;
+
     public Action OnPlayerWon;
 
     // Update is called once per frame
@@ -88,6 +90,8 @@ public class GlassBridgePlayerController : MonoBehaviour
 
     private void OnPlayerDead()
     {
+        if (isDead) return;
+
         realBody.SetActive(false);
         ragdollBody.SetActive(true);
         Camera.main.GetComponent<CameraFollow>().playerTarget = ragdollHips;
@@ -97,6 +101,8 @@ public class GlassBridgePlayerController : MonoBehaviour
         rb.useGravity = true;
 
         playerAudio.PlaySFX(2);
+
+        isDead = true;
 
         StartCoroutine(RestartGame());
 
@@ -112,10 +118,14 @@ public class GlassBridgePlayerController : MonoBehaviour
     {
         if (other.CompareTag(FALLING_DETECTOR_TAG))
         {
+            if (isFalling) return;
+
             isFalling = true;
 
             float fallingControllerHeight = .3f;
             controller.height = fallingControllerHeight;
+
+            playerAudio.PlaySFX(1);
             Debug.Log("PlayerFalling");
         }
 
@@ -133,10 +143,13 @@ public class GlassBridgePlayerController : MonoBehaviour
         {
             if (glass.isBreakable)
             {
+                if (isFalling) return;
+
                 isFalling = true;
 
                 Debug.Log("Glass is breakable");
                 glass.BreakGlass();
+
                 playerAudio.PlaySFX(1);
             }
         }
