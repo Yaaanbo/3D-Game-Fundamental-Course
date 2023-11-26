@@ -6,6 +6,9 @@ public class GlassBehaviour : MonoBehaviour
 {
     public bool isBreakable { get; set; }
 
+    [Header("Class References")]
+    [SerializeField] private GlassBridgeGlassAudio glassAudio;
+
     [Header("Parent Components")]
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private BoxCollider boxColl;
@@ -18,5 +21,8 @@ public class GlassBehaviour : MonoBehaviour
         meshRenderer.enabled = false;
         boxColl.enabled = false;
         brokenGlass.SetActive(true);
+
+
+        glassAudio.PlayShatterSFX();
     }
 }

@@ -10,6 +10,9 @@ public class GlassBridgePlayerController : MonoBehaviour
     private const string ROOM_GROUND_TAG = "RoomGround";
     private const string FINISH_LINE_TAG = "FinishColl";
 
+    [Header("Class Reference")]
+    [SerializeField] private GlassBridgePlayerAudio playerAudio;
+
     [Header("Movement")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private float movementSpeed = 10f;
@@ -79,6 +82,7 @@ public class GlassBridgePlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            playerAudio.PlaySFX(0);
         }
     }
 
@@ -91,6 +95,8 @@ public class GlassBridgePlayerController : MonoBehaviour
         controller.enabled = false;
         capsuleCol.center = new Vector3(0f, 0f, 0f);
         rb.useGravity = true;
+
+        playerAudio.PlaySFX(2);
 
         StartCoroutine(RestartGame());
 
@@ -131,6 +137,7 @@ public class GlassBridgePlayerController : MonoBehaviour
 
                 Debug.Log("Glass is breakable");
                 glass.BreakGlass();
+                playerAudio.PlaySFX(1);
             }
         }
     }
