@@ -9,6 +9,7 @@ TagManager:
   - FallDetector
   - RoomGround
   - FinishColl
+  - FP_PlayerPos
   layers:
   - Default
   - TransparentFX
