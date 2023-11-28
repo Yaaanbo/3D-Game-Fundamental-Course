@@ -30,7 +30,7 @@ public class FinalProjectBulletBehaviour : MonoBehaviour
     {
         if(other.TryGetComponent<FinalProjectPlayerController>(out FinalProjectPlayerController player))
         {
-            if (!FinalProjectGameManager.singleton.hasWon)
+            if (!FinalProjectGameManager.singleton.hasWon && !player.isDead)
             {
                 player.OnPlayerDead();
                 Destroy(this.gameObject);

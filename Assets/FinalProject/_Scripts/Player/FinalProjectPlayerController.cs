@@ -6,6 +6,10 @@ public class FinalProjectPlayerController : MonoBehaviour
 {
     private const string CANNON_GROUNDTAG = "FP_PlayerPos";
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip[] clips;
+
     [Header("Cannon Components")]
     [SerializeField] private Transform[] cannonGrounds;
     private int currentGroundIndex;
@@ -19,6 +23,7 @@ public class FinalProjectPlayerController : MonoBehaviour
     [SerializeField] private GameObject ragdollBody;
     [SerializeField] private ParticleSystem deadParticle;
 
+    public bool isDead { get; set; }
     public bool isJumping { get; private set; }
     private bool isCanJump = true;
    
@@ -59,6 +64,7 @@ public class FinalProjectPlayerController : MonoBehaviour
 
         isCanJump = false;
         rb.velocity = Vector3.up * jumpForce;
+        source.PlayOneShot(clips[0]);
     }
 
     private void MoveJump()
@@ -79,10 +85,14 @@ public class FinalProjectPlayerController : MonoBehaviour
     public void OnPlayerDead()
     {
         rb.isKinematic = true;
+        isDead = true;
 
         playerBody.SetActive(false);
         ragdollBody.SetActive(true);
         deadParticle.Play();
+
+        source.PlayOneShot(clips[1]);
+        source.PlayOneShot(clips[2]);
 
         StartCoroutine(FinalProjectGameManager.singleton.RestartGame());
     }

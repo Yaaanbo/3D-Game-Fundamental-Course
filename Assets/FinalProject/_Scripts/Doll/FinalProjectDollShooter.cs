@@ -15,6 +15,10 @@ public class FinalProjectDollShooter : MonoBehaviour
     [SerializeField] private float minDelay;
     [SerializeField] private float maxDelay;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip shotSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +27,8 @@ public class FinalProjectDollShooter : MonoBehaviour
 
     private IEnumerator DollShot()
     {
+        if (playerTransform.GetComponent<FinalProjectPlayerController>().isDead) yield break;
+
         float randomShotTime = Random.Range(minDelay, maxDelay);
         yield return new WaitForSeconds(randomShotTime);
 
@@ -30,6 +36,8 @@ public class FinalProjectDollShooter : MonoBehaviour
 
         FinalProjectBulletBehaviour bulletBehaviour = bulletGO.GetComponent<FinalProjectBulletBehaviour>();
         bulletBehaviour.playerTarget = playerTransform;
+
+        source.PlayOneShot(shotSFX);
 
         float destroyTime = 7f;
         Destroy(bulletGO, destroyTime);

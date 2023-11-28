@@ -12,6 +12,10 @@ public class FinalProjectCannonShooter : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float shootForce;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip shotSFX;
+
     // Update is called once per frame
     void Update()
     {
@@ -24,6 +28,8 @@ public class FinalProjectCannonShooter : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
             bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * shootForce, ForceMode.Impulse);
+
+            source.PlayOneShot(shotSFX);
 
             Destroy(bullet, 5f);
         }
