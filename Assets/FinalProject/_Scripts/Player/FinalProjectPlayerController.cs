@@ -13,6 +13,12 @@ public class FinalProjectPlayerController : MonoBehaviour
     [Header("Player Components")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float jumpForce;
+
+    [Header("Death")]
+    [SerializeField] private GameObject playerBody;
+    [SerializeField] private GameObject ragdollBody;
+    [SerializeField] private ParticleSystem deadParticle;
+
     public bool isJumping { get; private set; }
     private bool isCanJump = true;
    
@@ -68,6 +74,17 @@ public class FinalProjectPlayerController : MonoBehaviour
             isJumping = false;
             isCanJump = true;
         }
+    }
+
+    public void OnPlayerDead()
+    {
+        rb.isKinematic = true;
+
+        playerBody.SetActive(false);
+        ragdollBody.SetActive(true);
+        deadParticle.Play();
+
+        StartCoroutine(FinalProjectGameManager.singleton.RestartGame());
     }
 
     private void OnTriggerEnter(Collider other)

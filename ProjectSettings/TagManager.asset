@@ -10,6 +10,7 @@ TagManager:
   - RoomGround
   - FinishColl
   - FP_PlayerPos
+  - FP_CannonBullet
   layers:
   - Default
   - TransparentFX

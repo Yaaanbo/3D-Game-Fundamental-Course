@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonBody: {fileID: 4337160691475095793}
-  rotationSpeed: 10
+  rotationSpeed: 25
   isVerticallyInversed: 0
 --- !u!114 &3828684111712827071
 MonoBehaviour:
@@ -296,15 +296,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 5e52415bcbee14c58ab9d8215654b187, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9848078
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 5e52415bcbee14c58ab9d8215654b187, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.17364816
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 5e52415bcbee14c58ab9d8215654b187, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: 5e52415bcbee14c58ab9d8215654b187, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
